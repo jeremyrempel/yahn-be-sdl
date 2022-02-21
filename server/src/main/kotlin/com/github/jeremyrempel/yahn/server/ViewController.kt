@@ -1,51 +1,43 @@
 package com.github.jeremyrempel.yahn.server
 
+import com.github.jeremyrempel.yahn.server.api.interactor.PostService
+import com.github.jeremyrempel.yahn.server.model.Content
+import com.github.jeremyrempel.yahn.server.model.ContentListItem
+import com.github.jeremyrempel.yahn.server.model.Screen
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ViewController {
+class ViewController(
+    private val postService: PostService
+) {
 
     @GetMapping("/api/home")
-    fun home(): Screen {
+    suspend fun home(): Screen {
+        val data = postService
+            .fetchTopItems(500)
+            .map { item ->
+                ContentListItem.TwoLineText(
+                    title = item.title ?: "n/a",
+                    text = item.url ?: "n/a",
+                    link = "/api/item/${item.id}"
+                )
+            }
 
         return Screen(
             title = "Home",
-            content = Content.ContentList(
-                listOf(
-                    ContentListItem.TwoLineText(
-                        title = "Item 1",
-                        text = "Item 1 content",
-                        link = "/api/item/1"
-                    ),
-                    ContentListItem.TwoLineText(
-                        title = "Item 2",
-                        text = "Item 2 content",
-                        link = "/api/item/2"
-                    )
-                )
-            )
+            content = Content.ContentList(data)
         )
     }
 
     @GetMapping("/api/detail")
-    fun viewOne(@RequestParam(name = "id") id: String): Screen {
+    suspend fun detail(@RequestParam(name = "id") id: Long): Screen {
+        val data = postService.fetchItem(id)
 
         return Screen(
-            title = "View $id",
-            content = Content.ContentDetail("data: $id")
+            title = data.title ?: "n/a",
+            content = Content.ContentDetail(data.url ?: "n/a")
         )
     }
-}
-
-data class Screen(val title: String, val content: Content)
-
-sealed class Content(val type: String) {
-    data class ContentList(val data: List<ContentListItem>) : Content("list")
-    data class ContentDetail(val text: String) : Content("detail")
-}
-
-sealed class ContentListItem {
-    data class TwoLineText(val title: String, val text: String, val link: String) : ContentListItem()
 }
