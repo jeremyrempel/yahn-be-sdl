@@ -12,7 +12,6 @@ import org.springframework.web.reactive.function.client.awaitBody
 class PostService(
     builder: WebClient.Builder
 ) {
-
     private val baseUrl = "https://hacker-news.firebaseio.com/v0/"
     private val client = builder.baseUrl(baseUrl).build()
 
@@ -25,22 +24,18 @@ class PostService(
     }
 
     suspend fun fetchTopItems(limit: Int): List<Item> = coroutineScope {
-        fetchTop()
+        client
+            .get()
+            .uri("/topstories.json")
+            .retrieve()
+            .awaitBody<List<Long>>()
             .take(limit)
+            // fetch items in parallel for performance
             .map { id ->
-                // fetch items in parallel for performance
                 async {
                     fetchItem(id)
                 }
             }
             .awaitAll()
-    }
-
-    suspend fun fetchTop(): List<Long> {
-        return client
-            .get()
-            .uri("/topstories.json")
-            .retrieve()
-            .awaitBody()
     }
 }

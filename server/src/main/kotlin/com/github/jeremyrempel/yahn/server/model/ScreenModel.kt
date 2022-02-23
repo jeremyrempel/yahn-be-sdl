@@ -3,10 +3,20 @@ package com.github.jeremyrempel.yahn.server.model
 data class Screen(val title: String, val content: Content)
 
 sealed class Content(val type: String) {
-    data class ContentList(val data: List<ContentListItem>) : Content("list")
+    data class Row(val data: List<RowItem>) : Content("list")
     data class ContentDetail(val text: String) : Content("detail")
 }
 
-sealed class ContentListItem {
-    data class TwoLineText(val title: String, val text: String, val link: String) : ContentListItem()
+sealed class RowItem {
+    data class Card(
+        val title: String,
+        val subtitle1: String,
+        val subtitle2: String,
+        val cardLinkUrl: String,
+        val secondaryActionIcon: String,
+        val secondaryActionText: String,
+        val secondaryActionUrl: String
+    ) : RowItem()
+
+    data class FreeText(val text: String) : RowItem()
 }
