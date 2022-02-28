@@ -1,4 +1,4 @@
-package com.github.jeremyrempel.yahn.server.api.model
+package com.github.jeremyrempel.yahn.server.modelapi
 
 data class Item(
     val id: Int,

@@ -1,4 +1,4 @@
-package com.github.jeremyrempel.yahn.server.model
+package com.github.jeremyrempel.yahn.server.modelview
 
 data class Screen(val title: String, val content: Content)
 
