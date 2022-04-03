@@ -30,7 +30,7 @@ class PostService(
         )
     }
 
-    suspend fun buildDetailScreen(id: Long): Any {
+    suspend fun buildDetailScreen(id: Long): Screen {
         val data = fetchItem(id)
 
         return Screen(
