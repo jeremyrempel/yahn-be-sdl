@@ -28,6 +28,7 @@ dependencies {
 
     // json: http://localhost:8080/v3/api-docs
     // webui: http://localhost:8080/swagger-ui/index.html
+    implementation("org.springdoc:springdoc-openapi-native:1.6.6")
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.6")
 
     // reactive web

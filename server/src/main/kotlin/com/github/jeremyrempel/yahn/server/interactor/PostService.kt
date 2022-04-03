@@ -7,12 +7,10 @@ import com.github.jeremyrempel.yahn.server.modelview.Screen
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
 import java.net.URL
 
-@Service
 class PostService(
     builder: WebClient.Builder,
     baseUrl: String = "https://hacker-news.firebaseio.com/v0/"
