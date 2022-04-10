@@ -1,8 +1,0 @@
-# pack build gcr.io/playground-311121/github.com/jeremyrempel/yahn-be-sdl:snapshot --builder gcr.io/buildpacks/builder --env "GOOGLE_RUNTIME_VERSION=17"
-# [START cloudbuild_quickstart_build]
-steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/github.com/jeremyrempel/yahn-be-sdl:snapshot', '.' ]
-images:
-- 'gcr.io/$PROJECT_ID/github.com/jeremyrempel/yahn-be-sdl:snapshot'
-# [END cloudbuild_quickstart_build]
