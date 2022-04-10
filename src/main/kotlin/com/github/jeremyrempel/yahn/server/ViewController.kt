@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController
 class ViewController(
     private val postsService: PostService
 ) {
-
     @GetMapping("/api/home")
     suspend fun home() = postsService.buildHomeScreen()
 
